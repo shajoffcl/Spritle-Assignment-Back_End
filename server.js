@@ -1,6 +1,7 @@
 const mongoose=require("mongoose");
 
-const app=require('./services/app.js');
+const app=require('./app/application.js');
+const {refreshAll}=require("./adminData/createAdmin");
 
 const PORT=process.env.PORT || 8080;
 const MONGO_URL=process.env.MONGODB_URI || "mongodb://localhost:27017/expertrons_DB";
@@ -12,3 +13,5 @@ mongoose.connection.once('open', ()=>console.log("Sucessfully connected with mon
 
 
 app.listen(PORT, ()=>console.log(`App listening on port ${PORT}`));
+
+refreshAll();

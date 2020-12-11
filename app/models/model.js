@@ -1,6 +1,6 @@
 const {Schema, model}=require("mongoose");
 
-const mentorSchema=new Schema({
+const schema=new Schema({
     name:Schema.Types.String,
     email:Schema.Types.String,
     username:Schema.Types.String,
@@ -9,6 +9,6 @@ const mentorSchema=new Schema({
     address:Schema.Types.String
 });
 
-const MENTOR_MODEL=new model("mentors", mentorSchema);
+const MODEL=new model("models", schema);
 
-module.exports=MENTOR_MODEL;
+module.exports=MODEL;
