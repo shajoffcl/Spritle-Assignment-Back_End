@@ -1,46 +1,57 @@
-const MODEL=require("../models/model");
+const AGENT_MODEL=require("../models/agent.model");
 const getUserName=require("../utils/usernameGenerator");
 const getUniquePassword=require("../utils/passwordGenerator");
 const emailSender=require("../utils/emailSender");
 
-exports.createMentor=(req, res)=>{
+exports.createAgent=(req, res)=>{
     const email=req.body.email;
     const username=getUserName(email);
     const password=getUniquePassword();
     emailSender(email, username, password);
-    const mentor=new MODEL({...req.body, username, password});
-    mentor.save().then(mentor=>res.send(mentor));
+    const agent=new AGENT_MODEL({...req.body, username, password});
+    agent.save().then(agent=>res.send(agent)).catch(err=>{res.status(500).send(err)});
 }
 
-exports.accessMentor=(req, res)=>{
+exports.accessAgent=(req, res)=>{
     const username=req.body.username;
     const password=req.body.password;
-    MODEL.findOne({$and:[{username:username}, {password:password}]}).
-    then((result)=>{
-        if(!result){
+    AGENT_MODEL.findOne({$and:[{username:username}, {password:password}]}).
+    then((agent)=>{
+        if(!agent){
             res.status(404).send({message:"Authentication failed"});
             return;
         }
-        res.send(result);
+        res.send(agent);
     }).catch(err=>{res.status(500).send(err)});
 }
 
-exports.updateMentor=(req, res)=>{
+exports.accessAgentDetails=(req, res)=>{
+    AGENT_MODEL.findOne({_id:req.params.id})
+    .then((agent)=>{
+        if(!agent){
+            res.status(400).send({message:"Wrong Id"});
+            return;
+        }
+        res.send(agent);
+    }).catch(err=>res.status(500).send(err));
+}
+
+exports.updateAgent=(req, res)=>{
     const id=req.params.id;
-    MODEL.findByIdAndUpdate(id, req.body, {new:true})
-    .then((mentor)=>{
-        if(!mentor){
+    AGENT_MODEL.findByIdAndUpdate(id, req.body, {new:true})
+    .then((agent)=>{
+        if(!agent){
             res.status(400).send({message:"Wrong ID"});
             return;
         }
-        res.send(mentor);
+        res.send(agent);
     }).catch(err=>res.status(500).send(err));
 }
 
 
-exports.deleteMentor=(req, res)=>{
+exports.deleteAgent=(req, res)=>{
     const id=req.params.id;
-    MODEL.findByIdAndDelete(id)
+    AGENT_MODEL.findByIdAndDelete(id)
     .then((result)=>{
         if(!result){
             res.status(400).send({message:"Wrong ID"});
@@ -50,12 +61,12 @@ exports.deleteMentor=(req, res)=>{
     }).catch(err=>res.status(500).send(err));
 }
 
-exports.findAllMentor=(req, res)=>{
-    MODEL.find().then((admins)=>{
-        if(!admins){
+exports.findAllAgents=(req, res)=>{
+    AGENT_MODEL.find().then((agents)=>{
+        if(!agents){
             res.status(404).send({message:"No record available"});
             return;
         }
-        res.send(admins);
+        res.send(agents);
     }).catch(err=>res.status(500).send(err));
 }

@@ -12,7 +12,7 @@ const emailSender = (email, username, password) => {
   const mailOptions = {
     from: "plankshaufan@gmail.com",
     to: email,
-    subject: "Expertrons: Authentication Details",
+    subject: "Online Booking System: Authentication Details",
     text: `Please use this details to login: username=${username}, password=${password}`,
   };
   transporter.sendMail(mailOptions, function (error, info) {

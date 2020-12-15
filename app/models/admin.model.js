@@ -1,6 +1,6 @@
 const {Schema, model}=require("mongoose");
 
-const schema=new Schema({
+const adminSchema=new Schema({
     name:Schema.Types.String,
     email:Schema.Types.String,
     username:Schema.Types.String,
@@ -9,6 +9,6 @@ const schema=new Schema({
     address:Schema.Types.String
 });
 
-const MODEL=new model("models", schema);
+const ADMIN_MODEL=new model("admin", adminSchema);
 
-module.exports=MODEL;
+module.exports=ADMIN_MODEL;

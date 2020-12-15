@@ -1,7 +1,8 @@
 const express=require("express");
 const cors=require("cors");
+
 const admin=require("./routes/admin.route");
-const mentor=require("./routes/mentor.route");
+const agent=require("./routes/agent.route");
 
 const app=express();
 
@@ -10,6 +11,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 app.use("/admin", admin);
-app.use("/mentor", mentor);
+app.use("/agent", agent);
 
 module.exports=app;

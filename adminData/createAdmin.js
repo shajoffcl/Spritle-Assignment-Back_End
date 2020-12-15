@@ -1,9 +1,7 @@
-const MODEL = require('../app/models/model');
+const ADMIN_MODEL = require('../app/models/admin.model');
 const { admin } = require('./data')
 
-console.log(admin);
-
 exports.refreshAll = async () => {
-    await MODEL.deleteMany({})
-    await MODEL.insertMany(admin)
+    await ADMIN_MODEL.deleteMany({})
+    await ADMIN_MODEL.insertMany(admin)
 };
